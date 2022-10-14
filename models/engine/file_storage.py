@@ -1,12 +1,13 @@
 #!/usr/bin/python3
+from storage import Storage
 import json
 
-class FileStorage:
+class FileStorage(Storage):
 
     __file_path = "file.json"
     __objects = {}
 
-    def all(self):
+    def all(self, cls=None):
         return self.__objects
 
     def new(self, obj):
@@ -17,7 +18,7 @@ class FileStorage:
         """Serializes to file"""
         json_objs = {}
         try:
-            # cannot directly dump because datetime is not serializable
+            # cannot dump directly because datetime is not serializable
             for k in FileStorage.__objects:
                 json_objs[k] = FileStorage.__objects[k].to_dict()
             with open(FileStorage.__file_path, "w+") as f:
